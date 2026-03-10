@@ -6,6 +6,8 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
+JMX_TEST_GENERATION_ENDPOINT = "/api/performance/test-generation/jmeter"
+
 
 class LLMGenerateRequest(BaseModel):
     prompt: str = Field(min_length=5, max_length=4000)
@@ -34,9 +36,14 @@ app = FastAPI(title="Test Generation Service", version="0.1.0")
 
 
 def _baml_generate(prompt: str) -> Optional[JMeterHttpPlan]:
-    """Try to use a BAML generated client if available."""
+    """
+    Uses a BAML generated client.
+
+    BAML source files are maintained in:
+    - baml_src/clients.baml (LLM provider connection)
+    - baml_src/jmeter_generation.baml (prompt + contract)
+    """
     try:
-        # Expected when the team later generates BAML Python client code.
         from baml_client import b  # type: ignore
 
         result = b.GenerateJMeterPlan(prompt=prompt)
@@ -93,12 +100,12 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/api/performance/test-generation/generate", response_model=LLMGenerateResponse)
-def generate(request: LLMGenerateRequest) -> LLMGenerateResponse:
+@app.post(JMX_TEST_GENERATION_ENDPOINT, response_model=LLMGenerateResponse)
+def generate_jmeter_test_plan(request: LLMGenerateRequest) -> LLMGenerateResponse:
     generated = _baml_generate(request.prompt) or _fallback_generate(request.prompt)
 
     return LLMGenerateResponse(
         status="success",
         test_plan=generated,
-        explanation="Generated from prompt using BAML when available, otherwise fallback parser.",
+        explanation="Generated from BAML prompt contract (with deterministic fallback).",
     )
