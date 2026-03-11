@@ -1,6 +1,6 @@
 FROM node:alpine AS builder
 WORKDIR /frontend
-COPY frontend .
+COPY . .
 
 RUN npm install && \
     npm run build
@@ -17,13 +17,13 @@ RUN addgroup -g $GROUP_ID -S $GROUP_NAME
 RUN adduser -u $USER_ID -S $USER_NAME -G $GROUP_NAME -s /bin/sh
 
 COPY --from=builder /frontend/dist/* /usr/share/nginx/html/
-COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /app
 
-COPY frontend/nginx.conf .
+COPY nginx.conf .
 
-COPY frontend/envsubst-file.sh .
+COPY envsubst-file.sh .
 
 # Fix line endings and grant execute permissions to the entrypoint script
 RUN sed -i 's/\r$//' /app/envsubst-file.sh && chmod +x /app/envsubst-file.sh

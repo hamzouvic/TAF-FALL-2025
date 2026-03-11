@@ -367,17 +367,38 @@ services:
       retries: 5
 
   # ============================================
-  # FRONTEND - TEAM 1 (SELENIUM-TEST-SERVICE)
+  # CANONICAL FRONTEND (MIGRATION STEP 1)
   # ============================================
-  
+  # Default UI endpoint during migration: http://localhost:4200
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: taf-frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    environment:
+      API_BASE_URL: http://gateway:8080
+    depends_on:
+      - gateway
+      - backend-team3
+    networks:
+      - taf-local
+
+  # ============================================
+  # LEGACY TEAM FRONTENDS (OPTIONAL)
+  # ============================================
+  # These are kept temporarily behind profile "legacy-frontends".
   frontend-team1:
+    profiles: ["legacy-frontends"]
     build:
       context: ./selenium-test-Service
       dockerfile: frontend/Dockerfile
     container_name: taf-frontend-team1
     restart: unless-stopped
     ports:
-      - "4200:80"
+      - "4300:80"
     environment:
       API_BASE_URL: http://gateway:8080
     depends_on:
@@ -386,18 +407,15 @@ services:
     networks:
       - taf-local
 
-  # ============================================
-  # FRONTEND - TEAM 2 (TESTAPI-SERVICE)
-  # ============================================
-  
   frontend-team2:
+    profiles: ["legacy-frontends"]
     build:
       context: ./testapi-Service
       dockerfile: frontend/Dockerfile
     container_name: taf-frontend-team2
     restart: unless-stopped
     ports:
-      - "4300:80"
+      - "4400:80"
     environment:
       API_BASE_URL: http://gateway:8080
     depends_on:
@@ -406,18 +424,15 @@ services:
     networks:
       - taf-local
 
-  # ============================================
-  # FRONTEND - TEAM 3 (TEST-PERFORMANCE-SERVICE)
-  # ============================================
-  
   frontend-team3:
+    profiles: ["legacy-frontends"]
     build:
-      context: ./test-performance-Service
-      dockerfile: frontend/Dockerfile
+      context: ./apps/frontend
+      dockerfile: Dockerfile
     container_name: taf-frontend-team3
     restart: unless-stopped
     ports:
-      - "4400:80"
+      - "4500:80"
     environment:
       API_BASE_URL: http://gateway:8080
     depends_on:
