@@ -7,7 +7,7 @@ import {testModel2} from "../../../models/testmodel2";
 @Component({
   selector: 'app-delete-test-dialog',
   templateUrl: './delete-test-dialog.component.html',
-  styleUrls: ['./delete-test-dialog.component.less']
+  styleUrls: ['./delete-test-dialog.component.less', './delete-test-dialog.component.css']
 })
 export class DeleteTestDialogComponent implements OnInit {
   errorMessage: any;
