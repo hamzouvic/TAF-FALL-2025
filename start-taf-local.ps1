@@ -153,6 +153,7 @@ Write-Host "  Eureka Registry: http://localhost:8761 (eureka/eureka)" -Foregroun
 Write-Host "  API Gateway:     http://localhost:8080" -ForegroundColor White
 Write-Host "  Auth Service:    http://localhost:8081" -ForegroundColor White
 Write-Host "  User Service:    http://localhost:8082" -ForegroundColor White
+Write-Host "  Canonical Frontend: http://localhost:4200" -ForegroundColor Yellow
 
 if ($Mode -ne "minimal" -and $Mode -ne "core") {
     switch ($Mode) {
@@ -163,24 +164,24 @@ if ($Mode -ne "minimal" -and $Mode -ne "core") {
             Write-Host "  Selenium Team 1: http://localhost:4444" -ForegroundColor White
             Write-Host "  Selenium Team 2: http://localhost:4445" -ForegroundColor White
             Write-Host "  Selenium Team 3: http://localhost:4446" -ForegroundColor White
-            Write-Host "  Frontend Team 1: http://localhost:4200" -ForegroundColor Yellow
-            Write-Host "  Frontend Team 2: http://localhost:4300" -ForegroundColor Yellow
-            Write-Host "  Frontend Team 3: http://localhost:4400" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 1: http://localhost:4300" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 2: http://localhost:4400" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 3: http://localhost:4500" -ForegroundColor Yellow
         }
         "team1" {
             Write-Host "  Backend Team 1:  http://localhost:8083" -ForegroundColor White
             Write-Host "  Selenium Team 1: http://localhost:4444" -ForegroundColor White
-            Write-Host "  Frontend Team 1: http://localhost:4200" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 1: http://localhost:4300" -ForegroundColor Yellow
         }
         "team2" {
             Write-Host "  Backend Team 2:  http://localhost:8084" -ForegroundColor White
             Write-Host "  Selenium Team 2: http://localhost:4445" -ForegroundColor White
-            Write-Host "  Frontend Team 2: http://localhost:4300" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 2: http://localhost:4400" -ForegroundColor Yellow
         }
         "team3" {
             Write-Host "  Backend Team 3:  http://localhost:8085" -ForegroundColor White
             Write-Host "  Selenium Team 3: http://localhost:4446" -ForegroundColor White
-            Write-Host "  Frontend Team 3: http://localhost:4400" -ForegroundColor Yellow
+            Write-Host "  Frontend Team 3: http://localhost:4500" -ForegroundColor Yellow
         }
     }
 }
