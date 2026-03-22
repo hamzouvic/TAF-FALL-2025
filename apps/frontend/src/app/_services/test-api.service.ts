@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject,  Observable, Subject, forkJoin, throwError} from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { environment } from '../../environments/environment';
-import {testModel} from "../models/test-model";
 import {testModel2} from "../models/testmodel2";
 import {TestResponseModel} from "../models/testResponseModel";
 
@@ -14,6 +12,35 @@ import {TestResponseModel} from "../models/testResponseModel";
 export class TestApiService {
   REST_API: string = `${environment.apiUrl}/team3/api`
   constructor(private http: HttpClient) { }
+
+
+  getTemplate(template: string): Observable<any> {
+    return this.http.get(`${this.REST_API}/templates/${template}`);
+  }
+
+  getTestPlans(): Observable<any> {
+    return this.http.get(`${this.REST_API}/testapi/testPlans`);
+  }
+
+  addStructuredTest(type: string, testObject: any): Observable<any> {
+    return this.http.post<any>(`${this.REST_API}/testapi/${type}`, testObject);
+  }
+
+  getElement(type: string, id: string): Observable<any> {
+    return this.http.get<any>(`${this.REST_API}/testapi/${type}/${id}`);
+  }
+
+  updateElement(type: string, id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.REST_API}/testapi/${type}/${id}`, data);
+  }
+
+  deleteElement(type: string, id: string): Observable<void> {
+    return this.http.delete<void>(`${this.REST_API}/testapi/${type}/${id}`);
+  }
+
+  getAvailableModels(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.REST_API}/models`);
+  }
 
   //execute tests one by one
   executeTests(dataTests: testModel2[]): Observable<TestResponseModel[]> {

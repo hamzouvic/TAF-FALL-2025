@@ -58,7 +58,7 @@ services:
   
   registry:
     build:
-      context: ./registry
+      context: ./services/common/registry
       dockerfile: Dockerfile.local
     container_name: taf-registry
     restart: unless-stopped
@@ -83,7 +83,7 @@ services:
   
   gateway:
     build:
-      context: ./gateway
+      context: ./services/common/gateway
       dockerfile: Dockerfile
     container_name: taf-gateway
     restart: unless-stopped
@@ -108,7 +108,7 @@ services:
   
   auth:
     build:
-      context: ./auth
+      context: ./services/common/auth
       dockerfile: Dockerfile
     container_name: taf-auth
     restart: unless-stopped
@@ -149,7 +149,7 @@ services:
   
   user:
     build:
-      context: ./user
+      context: ./services/common/user
       dockerfile: Dockerfile.local
     container_name: taf-user
     restart: unless-stopped

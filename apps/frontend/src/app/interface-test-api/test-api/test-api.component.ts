@@ -4,6 +4,7 @@ import {testModel} from "../../models/test-model";
 import {MatDialog} from "@angular/material/dialog";
 import {AddTestDialogComponent} from "./add-test-dialog/add-test-dialog.component";
 import {DeleteTestDialogComponent} from "./delete-test-dialog/delete-test-dialog.component";
+import {EditTestDialogComponent} from "./edit-test-dialog/edit-test-dialog.component";
 import {testModel2} from "../../models/testmodel2";
 import {TestResponseModel} from "../../models/testResponseModel";
 
@@ -46,6 +47,16 @@ export class TestApiComponent implements OnInit {
 
     });
 
+  }
+
+
+  editTest(): void {
+    this.isPopupOpened = true;
+    const dialogRef = this.dialog.open(EditTestDialogComponent, { width: '80vw', height: '85vh' });
+    dialogRef.afterClosed().subscribe(() => {
+      this.isPopupOpened = false;
+      this.ngOnInit();
+    });
   }
 
   //oppen a dialog when user click

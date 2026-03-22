@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { HomeComponent } from './home/home.component';
+import { JmeterComponent } from './jmeter/jmeter.component';
+import { GatlingComponent } from './gatling/gatling.component';
+import { ResultsComponent } from './results/results.component';
 import { TestApiComponent } from './interface-test-api/test-api/test-api.component';
 import { LoginComponent } from './login/login.component';
 import { GatlingApiComponent } from './performance-test-api/gatling-api/gatling-api.component';
@@ -24,8 +27,11 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'test-api', component: TestApiComponent },
   { path: 'test-selenium', component: TestSeleniumComponent },
+  { path: 'results', component: ResultsComponent },
   { path: 'performance-test-api', component: PerformanceTestApiComponent },
   { path: 'performance-test-api', component: PerformanceTestApiComponent },
+  { path: 'gatling', component: GatlingComponent },
+  { path: 'jmeter', component: JmeterComponent },
   { path: 'gatling-test', component: GatlingApiComponent },
   { path: 'jmeter-test', component: JmeterApiComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }

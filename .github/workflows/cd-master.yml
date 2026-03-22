@@ -37,25 +37,25 @@ jobs:
           cache: gradle
 
       - name: Lint Java (Gradle Checkstyle - auth)
-        working-directory: auth
+        working-directory: services/common/auth
         run: |
           chmod +x gradlew
           ./gradlew checkstyleMain checkstyleTest --no-daemon
 
       - name: Lint Java (Gradle Checkstyle - gateway)
-        working-directory: gateway
+        working-directory: services/common/gateway
         run: |
           chmod +x gradlew
           ./gradlew checkstyleMain checkstyleTest --no-daemon
 
       - name: Lint Java (Gradle Checkstyle - registry)
-        working-directory: registry
+        working-directory: services/common/registry
         run: |
           chmod +x gradlew
           ./gradlew checkstyleMain checkstyleTest --no-daemon
 
       - name: Lint Java (Gradle Checkstyle - user)
-        working-directory: user
+        working-directory: services/common/user
         run: |
           chmod +x gradlew
           ./gradlew checkstyleMain checkstyleTest --no-daemon

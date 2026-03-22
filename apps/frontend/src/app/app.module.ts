@@ -24,8 +24,15 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import { AddTestDialogComponent } from './interface-test-api/test-api/add-test-dialog/add-test-dialog.component';
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteTestDialogComponent } from './interface-test-api/test-api/delete-test-dialog/delete-test-dialog.component';
+import { EditTestDialogComponent } from './interface-test-api/test-api/edit-test-dialog/edit-test-dialog.component';
+import { JsonEditorComponent } from './json-editor/json-editor.component';
+import { ResultsComponent } from './results/results.component';
+import { ResultDialogComponent } from './results/result-dialog/result-dialog.component';
+import { ErrorDialogComponent } from './interface-test-api/test-api/error-dialog.component';
+import { GatlingComponent } from './gatling/gatling.component';
+import { JmeterComponent } from './jmeter/jmeter.component';
 import {MatCardModule} from "@angular/material/card";
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -53,11 +60,18 @@ import { BusySpinnerComponent } from './busy-spinner/busy-spinner.component';
     ProjectComponent,
     TestApiComponent,
     AddTestDialogComponent,
+    EditTestDialogComponent,
     DeleteTestDialogComponent,
+    ErrorDialogComponent,
     TestSeleniumComponent,
     PerformanceTestApiComponent,
     GatlingApiComponent,
     JmeterApiComponent,
+    GatlingComponent,
+    JmeterComponent,
+    JsonEditorComponent,
+    ResultsComponent,
+    ResultDialogComponent,
     BusySpinnerComponent
   ],
 

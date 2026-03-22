@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { JMeterHttpRequest } from '../performance-test-api/jmeter-api/jmeter-http-request';
 import { JMeterFTPRequest } from '../performance-test-api/jmeter-api/jmeter-ftp-request';
-
 import { GatlingRequest } from '../performance-test-api/gatling-api/gatling-request';
 
 const GATLING_API = `${environment.apiUrl}/team3/api/performance/gatling/runSimulation`;
 const LATEST_REPORT_API = `${environment.apiUrl}/team3/api/performance/gatling/latest-report`;
-const JMeter_HttpRequest_API = `${environment.apiUrl}/team3/api/performance/jmeter/http`;
-const JMeter_FtpRequest_API = `${environment.apiUrl}/team3/api/performance/jmeter/ftp`;
+const JMETER_HTTP_REQUEST_API = `${environment.apiUrl}/team3/api/performance/jmeter/http`;
+const JMETER_FTP_REQUEST_API = `${environment.apiUrl}/team3/api/performance/jmeter/ftp`;
+
+const LEGACY_GATLING_API = `${environment.apiUrl}/team1/api/gatling`;
+const LEGACY_JMETER_API = `${environment.apiUrl}/team1/api/jmeter`;
+const LEGACY_SELENIUM_API = `${environment.apiUrl}/team1/api/selenium`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -20,36 +23,46 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class PerformanceTestApiService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   sendGatlingRequest(request: GatlingRequest): Observable<any> {
-    const url = `${GATLING_API}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    const response = this.http.post(url, request, httpOptions);
-    return response;
+    return this.http.post(GATLING_API, request, httpOptions);
   }
 
   getLatestReportUrl(): string {
     return LATEST_REPORT_API;
   }
 
-  sendHttpJMeterRequest(
-    jmeter_http_request: JMeterHttpRequest
-  ): Observable<any> {
-    const url = `${JMeter_HttpRequest_API}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.post(url, jmeter_http_request, httpOptions);
+  sendHttpJMeterRequest(jmeterHttpRequest: JMeterHttpRequest): Observable<any> {
+    return this.http.post(JMETER_HTTP_REQUEST_API, jmeterHttpRequest, httpOptions);
   }
 
-  sendFtpJMeterRequest(jmeter_ftp_request: JMeterFTPRequest): Observable<any> {
-    const url = `${JMeter_FtpRequest_API}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.post(url, jmeter_ftp_request, httpOptions);
+  sendFtpJMeterRequest(jmeterFtpRequest: JMeterFTPRequest): Observable<any> {
+    return this.http.post(JMETER_FTP_REQUEST_API, jmeterFtpRequest, httpOptions);
+  }
+
+  getAvailibleName(): string[] {
+    return ['gatling', 'jmeter', 'selenium'];
+  }
+
+  getTestsByType(type: string): Observable<any[]> {
+    if (type === 'gatling') {
+      return this.http.get<any[]>(`${LEGACY_GATLING_API}/requests`);
+    }
+    if (type === 'jmeter') {
+      return this.http.get<any[]>(`${LEGACY_JMETER_API}/requests`);
+    }
+    if (type === 'selenium') {
+      return this.http.get<any[]>(`${LEGACY_SELENIUM_API}/requests`);
+    }
+    return of([{ message: 'Aucun résultat disponible' }]);
+  }
+
+  getGatlingResult(requestName: string): Observable<any> {
+    return this.http.get<any>(`${LEGACY_GATLING_API}/results?requestName=${requestName}`);
+  }
+
+  getJMeterResult(testPlanId: string): Observable<any> {
+    return this.http.get<any>(`${LEGACY_JMETER_API}/results?testPlanId=${testPlanId}`);
   }
 }
